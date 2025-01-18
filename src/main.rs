@@ -71,6 +71,7 @@ fn save_to_cache(trie: &Trie<u8, model::Entry>, cache_path: &Path) -> Result<()>
 
 fn load_from_cache(cache_path: &PathBuf) -> Result<Trie<u8, model::Entry>> {
     let mut cache = File::open(cache_path)?;
+    // TODO there must be a way to use from_io, but for the life of me I can't figure it out
     let mut raw = Vec::new();
     cache.read_to_end(&mut raw)?;
     let result = postcard::from_bytes(&raw)?;

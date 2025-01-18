@@ -9,5 +9,6 @@ pub struct Entry {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Sense {
+    #[serde(default = "Vec::new")]
     pub glosses: Vec<String>
 }
