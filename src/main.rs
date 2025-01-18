@@ -16,9 +16,11 @@ fn find_dictionary_path() -> Result<PathBuf> {
 
 fn build_trie_from(dictionary: &Path) -> Result<Trie<u8, model::Entry>> {
     let dict_file = File::open(dictionary).wrap_err("failed to open dictionary file")?;
+    let mut err = Ok(()); // Tracking any potential iteration failures
+
     let entries = io::BufReader::new(dict_file)
         .lines()
-        .filter_map(|line| line.ok())
+        .scan((), |_, item| item.map_err(|e| err = Err(e)).ok())
         .filter_map(|line| match serde_json::from_str::<Entry>(&line) {
             Ok(entry) => Some(entry),
             Err(_) => None,
@@ -29,6 +31,7 @@ fn build_trie_from(dictionary: &Path) -> Result<Trie<u8, model::Entry>> {
         builder.push(entry.word.clone(), entry);
     }
 
+    err?;
     Ok(builder.build())
 }
 
@@ -61,7 +64,7 @@ fn should_cache(dict_path: &Path, cache_path: &Path) -> Result<bool> {
 }
 
 fn save_to_cache(trie: &Trie<u8, model::Entry>, cache_path: &Path) -> Result<()> {
-    let cache = OpenOptions::new().create(true).write(true).open(cache_path)?;
+    let cache = OpenOptions::new().create(true).truncate(true).write(true).open(cache_path)?;
     let _ = postcard::to_io(trie, cache)?;
     Ok(())
 }
