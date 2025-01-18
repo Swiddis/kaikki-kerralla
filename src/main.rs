@@ -16,7 +16,10 @@ fn find_dictionary_path() -> Result<PathBuf> {
 }
 
 fn build_trie_from(dictionary: &Path) -> Result<Trie<u8, model::Entry>> {
-    let dict_file = File::open(dictionary).wrap_err("failed to open dictionary file")?;
+    let dict_file = File::open(dictionary).wrap_err(format!(
+        "failed to open dictionary at {}",
+        dictionary.to_string_lossy()
+    ))?;
     let mut err = Ok(()); // Tracking any potential iteration failures
 
     let entries = io::BufReader::new(dict_file)
