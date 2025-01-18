@@ -6,8 +6,8 @@ use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use color_eyre::eyre::{Context, Result};
-use model::Entry;
-use trie_rs::map::{Trie, TrieBuilder};
+use model::{Dictionary, Entry};
+use trie_rs::map::TrieBuilder;
 
 fn find_dictionary_path() -> Result<PathBuf> {
     // TODO scan `data` for a dictionary file dynamically
@@ -15,7 +15,7 @@ fn find_dictionary_path() -> Result<PathBuf> {
     Ok(PathBuf::from(filename))
 }
 
-fn build_trie_from(dictionary: &Path) -> Result<Trie<u8, model::Entry>> {
+fn build_trie_from(dictionary: &Path) -> Result<Dictionary> {
     let dict_file = File::open(dictionary).wrap_err(format!(
         "failed to open dictionary at {}",
         dictionary.to_string_lossy()
@@ -71,7 +71,7 @@ fn should_cache(dict_path: &Path, cache_path: &Path) -> Result<bool> {
     Ok(cache_mod > dict_mod)
 }
 
-fn save_to_cache(trie: &Trie<u8, model::Entry>, cache_path: &Path) -> Result<()> {
+fn save_to_cache(trie: &Dictionary, cache_path: &Path) -> Result<()> {
     let cache = OpenOptions::new()
         .create(true)
         .truncate(true)
@@ -81,7 +81,7 @@ fn save_to_cache(trie: &Trie<u8, model::Entry>, cache_path: &Path) -> Result<()>
     Ok(())
 }
 
-fn load_from_cache(cache_path: &PathBuf) -> Result<Trie<u8, model::Entry>> {
+fn load_from_cache(cache_path: &PathBuf) -> Result<Dictionary> {
     let mut cache = File::open(cache_path)?;
     // TODO there must be a way to use from_io, but for the life of me I can't figure it out
     let mut raw = Vec::new();
@@ -90,7 +90,7 @@ fn load_from_cache(cache_path: &PathBuf) -> Result<Trie<u8, model::Entry>> {
     Ok(result)
 }
 
-fn load_dictionary() -> Result<Trie<u8, model::Entry>> {
+fn load_dictionary() -> Result<Dictionary> {
     let path = find_dictionary_path()?;
     let cache_path = path.with_extension("cache");
 
