@@ -53,7 +53,7 @@ fn build_trie_from(dictionary: &Path) -> Result<Dictionary> {
     for entry in entries {
         // Silently append POS for the dict key, to allow words that have
         // multiple parts of speech
-        builder.push(format!("{};{}", entry.word, entry.pos), entry);
+        builder.push(format!("{} {}", entry.word, entry.pos), entry);
     }
 
     err?;
