@@ -6,6 +6,10 @@ use eyre::{Context, Result};
 use serde::{Deserialize, Serialize};
 use trie_rs::map::{Trie, TrieBuilder};
 
+// For my use case, I happen to want to filter out compound words and names.
+// This toggles that. TODO make this a config file or something
+const MONOWORD_FILTERS: bool = true;
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Entry {
     pub word: String,
@@ -40,6 +44,9 @@ fn build_trie_from(dictionary: &Path) -> Result<Dictionary> {
         .filter_map(|line| match serde_json::from_str::<Entry>(&line) {
             Ok(entry) => Some(entry),
             Err(_) => None,
+        })
+        .filter(|entry| {
+            !MONOWORD_FILTERS || !(entry.word.contains(' ') || entry.pos == "name")
         });
 
     let mut builder = TrieBuilder::new();
