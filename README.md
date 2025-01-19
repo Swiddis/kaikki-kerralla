@@ -26,13 +26,7 @@ Like most of the Rust ecosystem, this tool is built with
 [Cargo](https://www.rust-lang.org/).
 
 ```bash
-$ cargo build --release
-```
-
-## Usage
-
-```bash
-$ ./target/release/kaikki-kerralla
+$ cargo run --release
 ```
 
 ## Contributing
