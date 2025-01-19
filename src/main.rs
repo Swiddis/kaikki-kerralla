@@ -40,7 +40,7 @@ impl eframe::App for Kerralla {
             let response = ui.add(egui::TextEdit::singleline(&mut self.query).lock_focus(true));
             response.request_focus();
 
-            if response.changed() {
+            if response.changed() && self.query.len() >= 2 {
                 self.result = self
                     .dictionary
                     .predictive_search(&self.query)
