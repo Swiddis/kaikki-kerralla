@@ -4,7 +4,7 @@
 > [*kerralla*](https://kaikki.org/dictionary/Finnish/meaning/k/ke/kerralla.html)
 > &mdash; at one time, in one go, at once
 
-Kaikki Kerralla (short: Kerralla) is a minimal and performant local dictionary tool built on the
+Kaikki Kerralla is a minimal and performant local dictionary tool built on the
 [Kaikki Wikitionary scrapes](https://kaikki.org/).
 
 <Center><img src="media/screencast.gif" width=300></center>
@@ -18,6 +18,13 @@ efficient as possible. One tool that was quite inspirational for the UI was
 [openrussian.org](https://en.openrussian.org/), which *does* have a fairly
 low-latency fuzzy search interface on each keypress. I simply wanted it for
 other languages, too.
+
+This is very minimal compared to most any other dictionary. If you need
+something like this, you probably have a very special use case. Some options to
+consider for more general use cases are
+[VocabSieve](https://github.com/FreeLanguageTools/vocabsieve/?tab=readme-ov-file),
+[Yomitan](https://github.com/yomidevs/yomitan), and
+[GoldenDict](http://www.goldendict.org/).
 
 ## Installation
 
