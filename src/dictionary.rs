@@ -51,7 +51,9 @@ fn build_trie_from(dictionary: &Path) -> Result<Dictionary> {
 
     let mut builder = TrieBuilder::new();
     for entry in entries {
-        builder.push(entry.word.clone(), entry);
+        // Silently append POS for the dict key, to allow words that have
+        // multiple parts of speech
+        builder.push(format!("{};{}", entry.word, entry.pos), entry);
     }
 
     err?;
