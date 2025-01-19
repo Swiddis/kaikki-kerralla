@@ -2,18 +2,18 @@ use std::fs::{File, OpenOptions};
 use std::io::{self, BufRead, Read};
 use std::path::{Path, PathBuf};
 
-use color_eyre::eyre::{Context, Result};
+use eyre::{Context, Result};
 use serde::{Deserialize, Serialize};
 use trie_rs::map::{Trie, TrieBuilder};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Entry {
     pub word: String,
     pub pos: String,
     pub senses: Vec<Sense>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Sense {
     #[serde(default = "Vec::new")]
     pub glosses: Vec<String>
