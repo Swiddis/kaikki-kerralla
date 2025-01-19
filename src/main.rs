@@ -65,10 +65,7 @@ impl eframe::App for Kerralla {
                         .size(24.0),
                 );
                 for sense in entry.senses.iter() {
-                    let label = sense
-                        .glosses
-                        .first()
-                        .map_or("[No Definition]", |v| v);
+                    let label = sense.glosses.first().map_or("[No Definition]", |v| v);
                     ui.label(RichText::new(label).color(MOCHA.text).size(18.0));
                 }
             }

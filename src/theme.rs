@@ -2,7 +2,6 @@
 /// to deal with converting between ecolor and eframe::color
 ///
 /// see: https://github.com/catppuccin/egui/blob/main/src/themes.rs
-
 use eframe::egui::Color32;
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]

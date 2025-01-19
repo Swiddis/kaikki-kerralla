@@ -20,7 +20,7 @@ pub struct Entry {
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Sense {
     #[serde(default = "Vec::new")]
-    pub glosses: Vec<String>
+    pub glosses: Vec<String>,
 }
 
 pub type Dictionary = Trie<u8, Entry>;
@@ -45,9 +45,7 @@ fn build_trie_from(dictionary: &Path) -> Result<Dictionary> {
             Ok(entry) => Some(entry),
             Err(_) => None,
         })
-        .filter(|entry| {
-            !MONOWORD_FILTERS || !(entry.word.contains(' ') || entry.pos == "name")
-        });
+        .filter(|entry| !MONOWORD_FILTERS || !(entry.word.contains(' ') || entry.pos == "name"));
 
     let mut builder = TrieBuilder::new();
     for entry in entries {
