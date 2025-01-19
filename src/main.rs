@@ -1,8 +1,10 @@
-pub mod dictionary;
+mod dictionary;
+mod theme;
 
-use eframe::egui;
+use eframe::egui::{self, RichText};
 
 use dictionary::{load_dictionary, Dictionary, Entry};
+use theme::MOCHA;
 
 fn main() -> eframe::Result {
     let native_options = eframe::NativeOptions::default();
@@ -49,12 +51,25 @@ impl eframe::App for Kerralla {
             }
 
             for entry in self.result.iter() {
-                ui.heading(format!("{}, {}", entry.word, entry.pos));
+                let section_color = match entry.pos.as_str() {
+                    "noun" => MOCHA.red,
+                    "adj" => MOCHA.green,
+                    "verb" => MOCHA.yellow,
+                    "adv" => MOCHA.blue,
+                    _ => MOCHA.text,
+                };
+                ui.label(
+                    RichText::new(format!("{}, {}", entry.word, entry.pos))
+                        .heading()
+                        .color(section_color)
+                        .size(24.0),
+                );
                 for sense in entry.senses.iter() {
-                    ui.label(sense
-                            .glosses
-                            .first()
-                            .unwrap_or(&"[No Definition]".to_string()));
+                    let label = sense
+                        .glosses
+                        .first()
+                        .map_or("[No Definition]", |v| v);
+                    ui.label(RichText::new(label).color(MOCHA.text).size(18.0));
                 }
             }
         });
