@@ -19,6 +19,9 @@ efficient as possible. One tool that was quite inspirational for the UI was
 low-latency fuzzy search interface on each keypress. I simply wanted it for
 other languages, too.
 
+At the time of writing, the code runs a full lookup-render cycle in 720 μs on my
+machine, for the English dictionary (the largest one in the Kaikki collection).
+
 This is very minimal compared to most any other dictionary. If you need
 something like this, you probably have a very special use case. Some options to
 consider for more general use cases are
