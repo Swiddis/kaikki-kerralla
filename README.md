@@ -28,8 +28,8 @@ consider for more general use cases are
 
 ## Installation
 
-Install a Kaikki dictionary and place it in the `data` directory. It will be
-autodetected and an index will be built on application startup.
+Install a Kaikki dictionary and place it in the `data` directory. Hack
+`dictionary.rs` to load it.
 
 Like most of the Rust ecosystem, this tool is built with
 [Cargo](https://www.rust-lang.org/).
