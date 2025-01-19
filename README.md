@@ -7,7 +7,7 @@
 Kaikki Kerralla (short: Kerralla) is a minimal and performant local dictionary tool built on the
 [Kaikki Wikitionary scrapes](https://kaikki.org/).
 
-![video: Looking up words faster than the framerate](media/screencast.gif)
+<Center><img src="media/screencast.gif" width=300></center>
 
 I wanted a tool that would let me look up words instantly, for realtime
 on-the-fly use cases, such as mid-conversation, or when actively watching
